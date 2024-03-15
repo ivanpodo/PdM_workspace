@@ -3432,3 +3432,71 @@ Command-line arguments:  -os linux -ws gtk -arch x86_64 /home/growcast/Documents
 
 !ENTRY org.eclipse.cdt.core 1 0 2024-03-10 22:41:32.808
 !MESSAGE Indexed 'practica-2' (99 sources, 208 headers) in 8.31 sec: 29,828 declarations; 90,741 references; 6 unresolved inclusions; 1,837 syntax errors; 1,823 unresolved names (1.5%)
+!SESSION 2024-03-14 11:08:55.292 -----------------------------------------------
+eclipse.buildId=Version 1.14.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  /home/growcast/Documents/Especializacion-FIUBA/Correcciones/PdM_workspace_Micael/Practica_2/.project
+Command-line arguments:  -os linux -ws gtk -arch x86_64 /home/growcast/Documents/Especializacion-FIUBA/Correcciones/PdM_workspace_Micael/Practica_2/.project
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-03-14 11:09:13.321
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-03-14 11:09:13.322
+!MESSAGE Log4j2 initialized with config file /home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-03-14 11:09:18.476
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-03-14 11:09:35.506
+!MESSAGE Indexed 'Practica_2' (99 sources, 209 headers) in 17 sec: 29,825 declarations; 90,759 references; 6 unresolved inclusions; 1,836 syntax errors; 1,823 unresolved names (1.5%)
+!SESSION 2024-03-14 21:31:19.896 -----------------------------------------------
+eclipse.buildId=Version 1.14.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  /home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/practica-3/.project
+Command-line arguments:  -os linux -ws gtk -arch x86_64 /home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/practica-3/.project
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-03-14 21:31:34.924
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-03-14 21:31:34.929
+!MESSAGE Log4j2 initialized with config file /home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-03-14 21:31:47.641
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-03-14 21:32:27.168
+!MESSAGE Indexed 'practica-3' (102 sources, 249 headers) in 38.9 sec: 32,432 declarations; 97,538 references; 6 unresolved inclusions; 75 syntax errors; 1,643 unresolved names (1.2%)
+!SESSION 2024-03-14 23:18:30.124 -----------------------------------------------
+eclipse.buildId=Version 1.14.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-03-14 23:18:36.291
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-03-14 23:18:36.292
+!MESSAGE Log4j2 initialized with config file /home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-03-14 23:18:42.441
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2024-03-15 10:10:57.259 -----------------------------------------------
+eclipse.buildId=Version 1.14.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-03-15 10:11:30.243
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-03-15 10:11:30.244
+!MESSAGE Log4j2 initialized with config file /home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-03-15 10:11:37.380
+!MESSAGE Started RMI Server, listening on port 41337

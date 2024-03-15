@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "stdint.h": "c",
+        "stm32f4xx_nucleo_144.h": "c"
+    }
+}

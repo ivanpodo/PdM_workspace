@@ -1,0 +1,9 @@
+#include "stm32f4xx_hal.h"        /* <- HAL include */
+#include <stdint.h>
+
+/**
+ * @brief Extension of HAL_GetTicks. Provides a tick value in millisecond.
+ * 
+ * @return uint32_t ticks value from the start
+ */
+uint32_t uxGetTicks(void) { return HAL_GetTick(); }
