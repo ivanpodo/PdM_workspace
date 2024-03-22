@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;practica-4-1/Drivers/API/src/API_debounce.c&apos; to &apos;API_delay.c&apos;" description="Rename resource &apos;API_debounce.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Drivers/API/src/API_debounce.c" name="API_delay.c" stamp="1711069712995" updateReferences="true"/>
+</session>

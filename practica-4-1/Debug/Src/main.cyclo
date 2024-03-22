@@ -1,0 +1,11 @@
+../Src/main.c:95:13:InitLEDs	1
+../Src/main.c:102:13:InitButton	1
+../Src/main.c:107:13:TurnOnLeds	1
+../Src/main.c:114:13:TurnOffLeds	1
+../Src/main.c:121:13:debounceFSM_init	1
+../Src/main.c:126:13:debounceFSM_update	11
+../Src/main.c:176:13:buttonPressed	1
+../Src/main.c:181:13:buttonReleased	1
+../Src/main.c:191:5:main	1
+../Src/main.c:240:13:SystemClock_Config	4
+../Src/main.c:292:13:Error_Handler	1
