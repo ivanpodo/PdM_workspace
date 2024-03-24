@@ -2,7 +2,7 @@
  ******************************************************************************
  * @file    PdM_workspace/practica-4-1/Src/main.c
  * @author  Iván Podoroska
- * @brief   This program is a solution to practice 3 of the
+ * @brief   This program is a solution to practice 4.1 of the
  * Microcontroller Programming Course.
  ******************************************************************************
  */

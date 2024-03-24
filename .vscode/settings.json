@@ -1,6 +1,12 @@
 {
     "files.associations": {
         "main.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "stm32f4xx_nucleo_144.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "api_debounce.h": "c",
+        "api_delay.h": "c",
+        "stdbool.h": "c",
+        "stddef.h": "c"
     }
 }

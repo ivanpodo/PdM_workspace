@@ -1,0 +1,5 @@
+../Src/main.c:30:13:InitLEDs	1
+../Src/main.c:37:13:ToggleLEDs	1
+../Src/main.c:49:5:main	5
+../Src/main.c:125:13:SystemClock_Config	4
+../Src/main.c:177:13:Error_Handler	1
