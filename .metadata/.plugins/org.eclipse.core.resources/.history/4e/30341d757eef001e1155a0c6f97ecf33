@@ -1,0 +1,176 @@
+#include "API_uart.h"
+#include <stdio.h>
+
+#include "stm32f4xx_hal.h"   	  /* <- HAL include */
+#include "stm32f4xx_nucleo_144.h" /* <- BSP include */
+
+#define UART_ERROR_SUPPORTED    3 // Number of errors supported. 1 Means NO ERROR
+#define TICKS_WAIT_ERROR        8 // Ticks to wait on hall status error|timeout|busy
+#define PRINT_BUFFER_SIZE       50
+
+static UART_HandleTypeDef huart_;
+static bool_t isInit = false;
+
+static void Error_Handler(void);
+
+static HAL_StatusTypeDef uartTransmitData(UART_HandleTypeDef *huart,
+                                          uint8_t *pData,
+                                          uint16_t size);
+
+static HAL_StatusTypeDef uartReceiveData(UART_HandleTypeDef *huart,
+                                         uint8_t *pData,
+                                         uint16_t size);
+
+bool_t uartInit()
+{
+    bool_t _ret = false;
+
+    huart_.Instance             = UART_INSTANCE;
+    huart_.Init.BaudRate        = UART_BAUDRATE;
+    huart_.Init.Parity          = UART_PARITY_NONE;     /** @ref UART_Parity                */
+    huart_.Init.StopBits        = UART_STOPBITS_1;      /** @ref UART_Stop_Bits             */
+    huart_.Init.WordLength      = UART_WORDLENGTH_8B;   /** @ref UART_Word_Length           */
+    huart_.Init.Mode            = UART_MODE_TX_RX;      /** @ref UART_Mode UART             */
+    huart_.Init.HwFlowCtl       = UART_HWCONTROL_NONE;  /** @ref UART_Hardware_Flow_Control */
+    huart_.Init.OverSampling    = UART_OVERSAMPLING_16; /** @ref UART_Over_Sampling         */
+    // HAL_UART_MspInit(&huart1);
+
+    if(HAL_UART_Init(&huart_) == HAL_OK)
+    {
+        isInit = true;
+        _ret = true;
+
+        uartSendString((uint8_t *)"UART configuration: 8N1\n\r");
+        
+        char _buffer[PRINT_BUFFER_SIZE];
+        snprintf(_buffer, sizeof(_buffer), "UART baudrate:      %lu\n\r",
+                 huart_.Init.BaudRate);
+        uartSendString((uint8_t *)_buffer);
+    }
+
+    return _ret;
+}
+
+void uartReceiveStringSize(uint8_t *pString, uint16_t size)
+{
+    if ((pString == NULL) || (isInit == false))
+    {
+        Error_Handler();
+    }
+
+    if (size > 0)
+    {
+        uartReceiveData(&huart_, pString, size);
+    }
+}
+
+void uartSendStringSize(uint8_t *pString, uint16_t size)
+{
+    if ((pString == NULL) || (isInit == false))
+    {
+        Error_Handler();
+    }
+
+    if (size > 0)
+    {
+        if(uartTransmitData(&huart_, pString, size) != HAL_OK)
+        {
+            Error_Handler();
+        }
+    }
+}
+
+void uartSendString(uint8_t *pString)
+{
+    if ((pString == NULL) || (isInit == false))
+    {
+        Error_Handler();
+    }
+
+    uint8_t _guard = 0U;
+    
+    while (((*pString) != '\0') && (_guard < UART_MAX_CHAR))
+    {
+        if(uartTransmitData(&huart_, pString, 1U) != HAL_OK)
+        {
+            break;
+        }
+        pString++;
+        _guard++;
+    }
+}
+
+static HAL_StatusTypeDef uartTransmitData(UART_HandleTypeDef *huart,
+                                          uint8_t *pData,
+                                          uint16_t size)
+{
+    if ((huart == NULL) || (isInit == false))
+    {
+        Error_Handler();
+    }
+
+    HAL_StatusTypeDef _result = HAL_ERROR;
+
+    uint8_t _retries = UART_ERROR_SUPPORTED;
+
+    do
+    {
+        _result = HAL_UART_Transmit(huart, pData, size, UART_TIMEOUT);
+
+        if (_result == HAL_OK)
+        {
+            break;
+        }
+
+        HAL_Delay(TICKS_WAIT_ERROR);
+
+        if (_retries == 0U)
+        {
+            break;
+        }
+
+    } while(_retries-- > 0);
+
+    return _result;
+}
+
+static HAL_StatusTypeDef uartReceiveData(UART_HandleTypeDef *huart,
+                                         uint8_t *pData,
+                                         uint16_t size)
+{
+    if ((huart == NULL) || (isInit == false))
+    {
+        Error_Handler();
+    }
+
+    HAL_StatusTypeDef _result = HAL_ERROR;
+
+    uint8_t _retries = UART_ERROR_SUPPORTED;
+       
+    do
+    {
+        _result = HAL_UART_Receive(huart, pData, size, UART_TIMEOUT);
+
+        if (_result == HAL_OK)
+        {
+            break;
+        }
+
+        HAL_Delay(TICKS_WAIT_ERROR);
+
+        if (_retries == 0U)
+        {
+            break;
+        }
+
+    } while(_retries-- > 0U);
+
+    return _result;
+}
+
+static void Error_Handler(void)
+{
+    while(1)
+    {}
+}
+                                    

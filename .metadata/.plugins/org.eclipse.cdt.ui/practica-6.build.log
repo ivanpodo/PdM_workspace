@@ -1,0 +1,17 @@
+13:20:50 **** Incremental Build of configuration Debug for project practica-6 ****
+make -j8 all 
+arm-none-eabi-gcc "../Drivers/API/src/API_uart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/practica-6/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/practica-6/Drivers/CMSIS/Include" -I"/home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/practica-6/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/practica-6/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/practica-6/Drivers/Core/Inc" -I"/home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/practica-6/Drivers/API/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/src/API_uart.d" -MT"Drivers/API/src/API_uart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/src/API_uart.o"
+arm-none-eabi-gcc -o "practica-6.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/practica-6/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="practica-6.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: practica-6.elf
+ 
+arm-none-eabi-size  practica-6.elf 
+arm-none-eabi-objdump -h -S practica-6.elf  > "practica-6.list"
+   text	   data	    bss	    dec	    hex	filename
+   7412	     36	   1588	   9036	   234c	practica-6.elf
+Finished building: default.size.stdout
+ 
+Finished building: practica-6.list
+ 
+
+13:20:51 Build Finished. 0 errors, 0 warnings. (took 473ms)
+
