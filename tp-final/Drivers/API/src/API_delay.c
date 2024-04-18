@@ -77,7 +77,7 @@ void delayWrite(delay_t *delay, tick_t duration)
       Error_Handler();
    }
 
-   delay->duration = duration;      
+   delay->duration = duration;
 }
 
 /**

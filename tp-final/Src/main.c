@@ -42,11 +42,6 @@ int main(void)
 
 	GPIO_Init();
 
-	if(LCD_init() != LCD_OK)
-	{
-		Error_Handler();
-	}
-
 	SystemClock_Config(); //Must be done before uartInit
 	
 	if(uartInit() != true)
@@ -61,7 +56,7 @@ int main(void)
 
 	delayInit(&ledDelay, 500);
 
-	if(AMB_MON_init() != true)
+	if(AMB_MON_Init() != true)
 	{
 		Error_Handler();
 	}
@@ -73,7 +68,7 @@ int main(void)
 
 		DBN_FSMupdate(&swButton);
 
-		AMB_MON_update(_dir, DBN_readKey(&swButton));
+		AMB_MON_Update(_dir, DBN_readKey(&swButton));
 
 		if (_dir == CounterCW)
 		{

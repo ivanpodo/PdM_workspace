@@ -14,6 +14,8 @@
 #define EN (1<<2)
 #define BL (1<<3)
 
+#define LCD_I2C_ADD (0x27<<1)
+
 // Control Signals
 #define CLR_LCD              (1<<0)
 #define RETURN_HOME          (1<<1)
@@ -48,7 +50,7 @@
 #define CMD_INIT1 0x30
 #define CMD_INIT2 0x20
 
-bool_t LCD_init(void);
+bool_t LCD_Init(void);
 void LCD_SendText(uint8_t *texto);
 void LCD_Data(uint8_t dato);
 void LCD_DataAscii(uint8_t dato);

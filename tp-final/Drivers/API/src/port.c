@@ -1,4 +1,9 @@
-#include "debounce_port.h"
+#include "port.h"
+
+void Port_Delay(uint32_t delayTime)
+{
+    HAL_Delay(delayTime);
+}
 
 pin_state_t Port_ReadPin(port_t port, pin_t pin)
 {

@@ -6,6 +6,7 @@
 
 #define ERROR_STR              (uint8_t *)"STATE - ERROR\n\r"
 #define INITIALIZATION_STR     (uint8_t *)"STATE - INITIALIZATION\n\r"
+#define DISPLAY_DATA_TOP_STR   (uint8_t *)"STATE - DISPLAY DATA TOP\n\r"
 #define DISPLAY_DATA_STR       (uint8_t *)"STATE - DISPLAY DATA\n\r"
 #define CALIBRATION_STR        (uint8_t *)"STATE - CALIBRATION\n\r"
 #define SELECT_TEMPERATURE_STR (uint8_t *)"STATE - SELECT TEMPERATURE\n\r"
@@ -45,15 +46,16 @@
 typedef enum
 {
     INITIALIZATION     = 1,
-    DISPLAY_DATA       = 2,
-    CALIBRATION        = 3,
-    SELECT_TEMPERATURE = 4,
-    SELECT_HUMIDITY    = 5,
-    SELECT_CO2         = 6,
-    EXIT               = 7,
-    OFFSET_TEMPERATURE = 8,
-    OFFSET_HUMIDITY    = 9,
-    OFFSET_CO2         = 10
+    DISPLAY_DATA_TOP,
+    DISPLAY_DATA,       
+    CALIBRATION,        
+    SELECT_TEMPERATURE, 
+    SELECT_HUMIDITY,    
+    SELECT_CO2,         
+    EXIT,               
+    OFFSET_TEMPERATURE, 
+    OFFSET_HUMIDITY,    
+    OFFSET_CO2         
 } eState;
 
 typedef struct
@@ -71,31 +73,44 @@ static void Error_Handler();
 static void updateDisplayData(strSCD *);
 static void updateDisplayOffset(int16_t, eState);
 
-bool_t AMB_MON_init()
+/**
+ * @brief Perform FSM initialization including LCD display and SCD sensor.
+ * Both must be connected to PB8 I2C_A_SCL & PB9 I2C_A_SDA
+ * 
+ * @return bool_t 
+ */
+bool_t AMB_MON_Init()
 {
     bool_t _ret = true;
     FSM.state_ = INITIALIZATION;
 
     delayInit(&dataDelay, UPDATE_DATA_INTERVAL);
 
-    if (LCD_init() != LCD_OK)
+    if (LCD_Init() != LCD_OK)
     {
         Error_Handler();
     }
 
     LCD_Clear();
     
-    if (SCD_init() != SCD_OK)
-    {
-        Error_Handler();
-    }
+    // if (SCD_Init() != SCD_OK)
+    // {
+    //     Error_Handler();
+    // }
     
     return _ret;
 }
 
 static bool_t entry = true;
 
-void AMB_MON_update(eMovingDir dir, bool_t swPressed)
+/**
+ * @brief Updates FSM periodically. Updates Display and poll sensors every
+ * `POLLING_SENSOR_DATA`
+ * 
+ * @param dir 
+ * @param swPressed 
+ */
+void AMB_MON_Update(eMovingDir dir, bool_t swPressed)
 {
     switch (FSM.state_)
     {
@@ -105,6 +120,7 @@ void AMB_MON_update(eMovingDir dir, bool_t swPressed)
             LCD_SendText(LCD_INITIALIZATION_STR);
 
             SCD_CleanSensor(&Sensor);
+            // SCD_PollData(&Sensor); //TODO descomentar
             Sensor.data.temp = 241; //TODO: sacar
             Sensor.data.hum  = 64;  //TODO: sacar
             Sensor.data.co2  = 789; //TODO: sacar
@@ -113,9 +129,33 @@ void AMB_MON_update(eMovingDir dir, bool_t swPressed)
             Sensor.config.humOffset  = 5;   //TODO: sacar
             Sensor.config.co2Offset  = 100; //TODO: sacar
 
-            HAL_Delay(100);
-            FSM.state_ = DISPLAY_DATA;
+            FSM.state_ = DISPLAY_DATA_TOP;
             entry = true;
+            break;
+
+        case DISPLAY_DATA_TOP:
+            if (entry)
+            {
+                LCD_Clear();
+                LCD_PosCharacH(0);
+                uartSendString(DISPLAY_DATA_TOP_STR);
+                updateDisplayData(&Sensor);
+                entry = false;
+            }
+
+            if (delayRead(&dataDelay))
+            {
+                uartSendString(POLLING_SENSOR_DATA);
+                // SCD_PollData(&Sensor); // TODO: poll data from sensors
+                updateDisplayData(&Sensor);
+            }
+            
+            if (swPressed)
+            {
+                FSM.state_ = DISPLAY_DATA;
+                entry = true;
+            }
+            
             break;
 
         case DISPLAY_DATA:
@@ -128,14 +168,12 @@ void AMB_MON_update(eMovingDir dir, bool_t swPressed)
                 entry = false;
             }
 
-            if (delayRead(&dataDelay))
-            {
-                uartSendString(POLLING_SENSOR_DATA);
-                SCD_PollData(&Sensor); // TODO: poll data from sensors
-                updateDisplayData(&Sensor);
-            }
-            
             if (swPressed)
+            {
+                FSM.state_ = DISPLAY_DATA_TOP;
+                entry = true;
+            }
+            else if (dir != INVALID)
             {
                 FSM.state_ = CALIBRATION;
                 entry = true;
@@ -391,6 +429,11 @@ void AMB_MON_update(eMovingDir dir, bool_t swPressed)
     }
 }
 
+/**
+ * @brief Update display with data stored in sensor structure
+ * 
+ * @param sensor 
+ */
 static void updateDisplayData(strSCD *sensor)
 {
     LCD_Clear();
@@ -417,6 +460,12 @@ static void updateDisplayData(strSCD *sensor)
     LCD_SendText((uint8_t *)LCD_CO2_UNIT);
 }
 
+/**
+ * @brief Update display in offset setting states.
+ * 
+ * @param counter 
+ * @param state 
+ */
 static void updateDisplayOffset(int16_t counter, eState state)
 {
     char _buffer[STR_BUFF_TEXT_LENGTH];
@@ -450,6 +499,10 @@ static void updateDisplayOffset(int16_t counter, eState state)
     }
 }
 
+/**
+ * @brief Error handler function that is called when an invalid operation occurs
+ * 
+ */
 static void Error_Handler()
 {
     while (1) { }

@@ -1,11 +1,17 @@
 #include "API_debounce.h"
+#include "port.h"
 
 static void Error_Handler(void);
 
 /**
- * @brief   Initializes the debounce Finite State Machine (FSM) to its starting
- * 		    state. This function sets the internal state of the FSM to the 
- *          initial state, preparing it for operation and state tracking.
+ * @brief Initializes the debounce Finite State Machine (FSM) to its initial state.
+ *        This function prepares the FSM for operation by setting the initial state
+ *        and initializing related hardware configurations.
+ *
+ * @param button Pointer to stDebounce structure managing the debounce state.
+ * @param pin Pointer to gpio_t structure representing the GPIO pin configuration.
+ * @param delay Pointer to delay_t structure used for timing operations.
+ * @note This function must be called before any other debouncing functions are used.
  */
 void DBN_FSMinit(stDebounce *button, gpio_t *pin, delay_t *delay)
 {
@@ -25,10 +31,12 @@ void DBN_FSMinit(stDebounce *button, gpio_t *pin, delay_t *delay)
 }
 
 /**
- * @brief   Updates the Finite State Machine (FSM) based on the state of 
- * 		    BUTTON_USER. This function reads the current state of BUTTON_USER 
- *          and adjusts the FSM to reflect any changes, ensuring that button 
- * 		    debouncing is handled properly.
+ * @brief Updates the debounce FSM based on the current state of the button GPIO pin.
+ *        This function reads the GPIO pin state and transitions the FSM states 
+ * 		  accordingly to handle debouncing effectively.
+ *
+ * @param button Pointer to stDebounce structure managing the debounce state.
+ * @note The FSM must be initialized with DBN_FSMinit before calling this function.
  */
 void DBN_FSMupdate(stDebounce *button)
 {
@@ -85,13 +93,13 @@ void DBN_FSMupdate(stDebounce *button)
 }
 
 /**
- * @brief   Reads the state of a key and determines if it has been pressed.
- *          This function is responsible for checking the current state of an 
- *          internal module variable, which represents whether a specific key 
- *          has been pressed. Upon invocation, it reads this variable and  
- *          outputs a boolean value: true or false.
- * @return  bool_t Returns true if the key has been pressed since the last time
- *          it was checked. Otherwise, returns false.
+ * @brief Checks if a button has been pressed since the last call.
+ *        Reads and returns the press state of the button, resetting the state 
+ * 		  after checking.
+ *
+ * @param button Pointer to stDebounce structure managing the debounce state.
+ * @return bool_t True if the button was pressed since the last check, false 
+ * 		   otherwise.
  */
 bool DBN_readKey(stDebounce *button)
 {
@@ -100,11 +108,21 @@ bool DBN_readKey(stDebounce *button)
     return _ret;
 }
 
+/**
+ * @brief Retrieves the current state of the debounce FSM.
+ *
+ * @param button Pointer to stDebounce structure managing the debounce state.
+ * @return debounceState_t The current state of the debounce FSM.
+ */
 debounceState_t DBN_getState(stDebounce *button)
 {
 	return button->state_;
 }
 
+/**
+ * @brief Error handler function that is called when an invalid operation occurs
+ * 
+ */
 static void Error_Handler(void)
 {
 	while (1)

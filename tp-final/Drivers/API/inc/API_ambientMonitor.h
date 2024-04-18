@@ -4,9 +4,9 @@
 #include "API_common.h"
 #include "API_encoder.h"
 
-#define UPDATE_DATA_INTERVAL 15000 /** Time between sensor polling [ms]*/
+#define UPDATE_DATA_INTERVAL 10000 /** Time between data adquisitions [ms]*/
 
-bool_t  AMB_MON_init();
-void    AMB_MON_update(eMovingDir dir, bool_t swPress);
+bool_t AMB_MON_Init();
+void   AMB_MON_Update(eMovingDir dir, bool_t swPress);
 
 #endif

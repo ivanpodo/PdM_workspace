@@ -1,22 +1,28 @@
-/// @file API_I2C.c
-/// @version 1.0
-/// @date 23/4/2023
-/// @author Ing. Pavelek Israel
-/// @title API de manejo I2C
-/// @brief funciones I2C.c
+/**
+ * @file API_i2c.h
+ * @brief I2C interface library for STM32 microcontrollers.
+ */
+
 #include "API_i2c.h"
 
 
-/**
-  * @brief  Handle del I2C utilziado para el bus del LCD y el RTC
-*/
 I2C_HandleTypeDef hi2c1;
 
+static bool_t isInit_ = false;
 
 static void GPIO_I2C(I2C_HandleTypeDef *hi2c);
 
+/**
+ * @brief Initializes the I2C hardware with predefined settings.
+ * @return Returns HAL_OK if successful, HAL_ERROR otherwise.
+ */
 bool_t I2C_HW_init(void)
 {
+	if (isInit_)
+	{
+		return HAL_OK;
+	}
+	
 	hi2c1.Instance 			   = I2C1;
 	hi2c1.Init.ClockSpeed 	   = I2C_CLOCK_RATE;
 	hi2c1.Init.DutyCycle 	   = I2C_DUTYCYCLE_2;
@@ -33,9 +39,55 @@ bool_t I2C_HW_init(void)
 		return HAL_ERROR;
 	}
 
+	isInit_ = true;
 	return HAL_OK;
 }
 
+/**
+ * @brief Sends data over the I2C bus to a specified slave device.
+ * @param address The address of the slave device.
+ * @param ptrData Pointer to the data buffer to transmit.
+ * @param size Number of bytes to transmit.
+ * @return true if successful, false otherwise.
+ */
+bool_t I2C_Send(uint16_t address, uint8_t *ptrData, uint16_t size)
+{
+	if(HAL_I2C_Master_Transmit(&hi2c1, address, ptrData, size, I2C_TIMEOUT) != HAL_OK)
+	{
+		return false;
+	}
+	return true;
+}
+
+/**
+ * @brief Receives data from a specified slave device over the I2C bus.
+ * @param address The address of the slave device.
+ * @param ptrData Pointer to the buffer to store received data.
+ * @param size Number of bytes to receive.
+ * @return true if successful, false otherwise.
+ */
+bool_t I2C_Receive(uint16_t address, uint8_t *ptrData, uint16_t size)
+{
+	if (HAL_I2C_Master_Receive(&hi2c1, address, ptrData, sizeof(ptrData), I2C_TIMEOUT) != HAL_OK)
+	{
+		return false;
+	}
+	return true;
+}
+
+/**
+ * @brief Checks if the I2C interface has been initialized.
+ * @return true if I2C is initialized, false otherwise.
+ */
+bool_t isInit()
+{
+	return isInit_;
+}
+
+/**
+ * @brief Configures GPIO for I2C communication.
+ * @param hi2c Pointer to the I2C_HandleTypeDef structure that contains the configuration information for I2C module.
+ */
 static void GPIO_I2C(I2C_HandleTypeDef *hi2c)
 {
 	 GPIO_InitTypeDef GPIO_InitStruct;

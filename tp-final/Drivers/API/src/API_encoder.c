@@ -1,5 +1,5 @@
 #include "API_encoder.h"
-#include "debounce_port.h"
+#include "port.h"
 
 typedef enum
 {
@@ -27,6 +27,10 @@ static delay_t dtDelay;
 
 static void Error_Handler(void);
 
+/**
+ * @brief Perform encoder FSM initialization.
+ * 
+ */
 void ENC_encoderInit()
 {
     DBN_FSMinit(&clkButton, &Encoder.clk_, &clkDelay);
@@ -62,6 +66,10 @@ void ENC_encoderInit()
     isInit         = true;
 }
 
+/**
+ * @brief Updates encoder FSM. Must be called pediodically
+ * 
+ */
 void ENC_encoderUpdate()
 {
     if (!isInit)
@@ -152,6 +160,11 @@ void ENC_encoderUpdate()
     }
 }
 
+/**
+ * @brief Return last valid direction just one time.
+ * 
+ * @return eMovingDir 
+ */
 eMovingDir ENC_getDirection()
 {
     eMovingDir _ret = INVALID;
@@ -164,6 +177,13 @@ eMovingDir ENC_getDirection()
     return _ret;
 }
 
+/**
+ * @brief Set gpios into internal structure
+ * 
+ * @param dt 
+ * @param clk 
+ * @return bool_t 
+ */
 bool_t ENC_setGPIOs(gpio_t *dt, gpio_t *clk)
 {
     if ((NULL == dt) || (NULL == clk))
@@ -179,6 +199,10 @@ bool_t ENC_setGPIOs(gpio_t *dt, gpio_t *clk)
     return true;
 }
 
+/**
+ * @brief Error handler function that is called when an invalid operation occurs
+ * 
+ */
 static void Error_Handler(void)
 {
 	while (1)

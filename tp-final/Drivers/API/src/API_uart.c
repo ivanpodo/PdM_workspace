@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "API_uart.h"
-#include "stm32f4xx_hal.h"   	  /**< HAL include */
-#include "stm32f4xx_nucleo_144.h" /**< BSP include */
+#include "stm32f4xx_hal.h"   	 
+#include "stm32f4xx_nucleo_144.h"
 
 #define UART_ERROR_SUPPORTED    3   /**< Number of retry attempts for UART 
                                          errors. */
@@ -11,8 +11,8 @@
                                          UART configurations. */
 #define UART_INSTANCE   USART3
 
-static UART_HandleTypeDef huart_;   /**< UART handle for managing UART 
-                                         communication settings and state. */
+static UART_HandleTypeDef huart_;
+
 static bool_t isInit = false;       /**< Flag indicating if the UART has been 
                                          successfully initialized. */
 
@@ -223,9 +223,8 @@ static HAL_StatusTypeDef uartReceiveData(UART_HandleTypeDef *huart,
 }
 
 /**
- * @brief Error handler function.
- *
- * This function is called when an unrecoverable error occurs.
+ * @brief Error handler function that is called when an invalid operation occurs
+ * 
  */
 static void Error_Handler(void)
 {
