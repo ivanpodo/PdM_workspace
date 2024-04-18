@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "stdint.h": "c",
+        "stm32f4xx_nucleo_144.h": "c",
+        "stm32f4xx_hal_uart.h": "c",
+        "debounce_port.h": "c",
+        "api_common_port.h": "c",
+        "api_common.h": "c",
+        "api_encoder.h": "c",
+        "stddef.h": "c",
+        "lcd_port.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "api_lcd.h": "c",
+        "api_delay.h": "c",
+        "api_ambientmonitor.h": "c",
+        "api_mef.h": "c",
+        "api_scd4x.h": "c"
+    }
+}

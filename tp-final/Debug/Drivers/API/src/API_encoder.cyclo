@@ -1,0 +1,5 @@
+../Drivers/API/src/API_encoder.c:30:6:ENC_encoderInit	4
+../Drivers/API/src/API_encoder.c:65:6:ENC_encoderUpdate	18
+../Drivers/API/src/API_encoder.c:155:12:ENC_getDirection	2
+../Drivers/API/src/API_encoder.c:167:8:ENC_setGPIOs	3
+../Drivers/API/src/API_encoder.c:182:13:Error_Handler	1

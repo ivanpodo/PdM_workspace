@@ -1,0 +1,3 @@
+../Drivers/API/src/API_scd4x.c:3:8:SCD_init	1
+../Drivers/API/src/API_scd4x.c:9:8:SCD_CleanSensor	2
+../Drivers/API/src/API_scd4x.c:27:6:SCD_PollData	1

@@ -1,0 +1,13 @@
+../Drivers/API/src/API_lcd.c:27:8:LCD_init	3
+../Drivers/API/src/API_lcd.c:54:6:LCD_Data	1
+../Drivers/API/src/API_lcd.c:59:6:LCD_DataAscii	1
+../Drivers/API/src/API_lcd.c:64:6:LCD_DataBCD	1
+../Drivers/API/src/API_lcd.c:70:6:LCD_SendText	2
+../Drivers/API/src/API_lcd.c:78:6:LCD_Clear	1
+../Drivers/API/src/API_lcd.c:84:6:LCD_PosCharacH	2
+../Drivers/API/src/API_lcd.c:93:6:LCD_PosCharacL	2
+../Drivers/API/src/API_lcd.c:102:6:LCD_CursorOff	1
+../Drivers/API/src/API_lcd.c:107:6:LCD_CursorOn	1
+../Drivers/API/src/API_lcd.c:112:13:controlLcd	1
+../Drivers/API/src/API_lcd.c:117:13:send8bits	1
+../Drivers/API/src/API_lcd.c:123:13:send4bits	1
