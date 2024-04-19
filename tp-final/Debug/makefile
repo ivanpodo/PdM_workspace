@@ -65,8 +65,8 @@ all: main-build
 main-build: tp-final.elf secondary-outputs
 
 # Tool invocations
-tp-final.elf tp-final.map: $(OBJS) $(USER_OBJS) /home/growcast/Documents/Especializacion-FIUBA/1er-sem-proy-final/STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "tp-final.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/growcast/Documents/Especializacion-FIUBA/1er-sem-proy-final/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp-final.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+tp-final.elf tp-final.map: $(OBJS) $(USER_OBJS) /home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/tp-final/STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "tp-final.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/growcast/Documents/Especializacion-FIUBA/PdM_workspace/tp-final/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp-final.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

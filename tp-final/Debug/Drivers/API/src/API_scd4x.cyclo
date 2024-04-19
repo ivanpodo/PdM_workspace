@@ -1,3 +1,5 @@
-../Drivers/API/src/API_scd4x.c:3:8:SCD_init	1
-../Drivers/API/src/API_scd4x.c:9:8:SCD_CleanSensor	2
-../Drivers/API/src/API_scd4x.c:27:6:SCD_PollData	1
+../Drivers/API/src/API_scd4x.c:55:8:SCD_Init	4
+../Drivers/API/src/API_scd4x.c:77:8:SCD_CleanSensor	2
+../Drivers/API/src/API_scd4x.c:100:8:SCD_PollData	6
+../Drivers/API/src/API_scd4x.c:151:15:SCD_SendCommand	1
+../Drivers/API/src/API_scd4x.c:165:16:SCD_CRC8	4

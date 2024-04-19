@@ -27,6 +27,7 @@
 #define SET_ASC_ENABLED     0x2416
 #define GET_ASC_ENABLED     0x2313
 #define DATA_READY_STATUS   0xE4B8U
+#define POLYNOMIAL 			0x31
 #define DATA_READY_LENGTH   3U
     
 #define CO2_POS_0    0U
@@ -45,7 +46,7 @@
 #define WAIT_TIME  50U
 
 static bool_t  SCD_SendCommand(uint16_t cmd);
-// static uint8_t SCD_CRC8(const uint8_t *data, uint8_t len);
+static uint8_t SCD_CRC8(const uint8_t *data, uint8_t len);
 
 /**
  * @brief Initializes the SCD4x sensor.
@@ -53,12 +54,15 @@ static bool_t  SCD_SendCommand(uint16_t cmd);
  */
 bool_t SCD_Init()
 {
-    if (I2C_HW_init() != I2C_OK)
-    {
-        return SCD_ERROR;
-    }
+	if(!I2C_isInit())
+	{
+		if (I2C_HW_init() != I2C_OK)
+		{
+			return SCD_ERROR;
+		}
+	}
     
-    if(SCD_SendCommand(START_PERIODIC_MODE)) /** Start continue measurement */
+    if(SCD_SendCommand(START_PERIODIC_MODE) == I2C_OK) /** Start continue measurement */
     {
         return SCD_OK;
     }
@@ -100,17 +104,32 @@ bool_t SCD_PollData(strSCD *sensor)
     uint16_t rawTemperature = 0U;
     uint16_t rawHumidity    = 0U;
 
-    if (!SCD_SendCommand(READ_DATA))
+    if (SCD_SendCommand(READ_DATA) != I2C_OK)
     {
         return SCD_ERROR;
     }
 
-    if(I2C_Send(SCD_I2C_ADDR, data, SCD_DATA_LENGTH) != I2C_OK)
+    Port_Delay(50);
+
+    if(I2C_Receive(SCD_I2C_ADDR, data, SCD_DATA_LENGTH) != I2C_OK)
     {
         return SCD_ERROR;
     }
 
-    // TODO CRC8
+    if (SCD_CRC8(data, 2) != data[CO2_CRC_POS]) /** Check CO2 CRC */
+    {
+    	return SCD_ERROR;
+    };
+
+    if (SCD_CRC8(data + 3, 2) != data[TEMP_CRC_POS]) /** Check Temperature CRC */
+    {
+    	return SCD_ERROR;
+    };
+
+    if (SCD_CRC8(data + 6, 2) != data[HUM_CRC_POS]) /** Check Humidity CRC */
+    {
+        	return SCD_ERROR;
+	};
 
     rawCO2           = (data[CO2_POS_0] << 8) | data[CO2_POS_1];
     sensor->data.co2 = rawCO2;
@@ -132,8 +151,8 @@ bool_t SCD_PollData(strSCD *sensor)
 static bool_t SCD_SendCommand(uint16_t cmd)
 {
     uint8_t data[2];
-    data[0] = (cmd >> 8) & 0xFF; // MSB primero
-    data[1] = cmd & 0xFF;        // LSB después
+    data[0] = (cmd >> 8) & 0xFF;
+    data[1] = cmd & 0xFF;
     return I2C_Send(SCD_I2C_ADDR, data, 2);
 }
 
@@ -143,18 +162,20 @@ static bool_t SCD_SendCommand(uint16_t cmd)
  * @param len Length of the data array.
  * @return uint8_t Calculated CRC8 value.
  */
-// static uint8_t SCD_CRC8(const uint8_t *data, uint8_t len)
-// {
-//     const uint8_t POLYNOMIAL = 0x31;
-//     uint8_t crc = CRC_INIT;
-//     for (int j = 0; j < len; j++) {
-//         crc ^= data[j];
-//         for (int i = 8; i > 0; i--) {
-//             if (crc & 0x80)
-//                 crc = (crc << 1) ^ POLYNOMIAL;
-//             else
-//                 crc = (crc << 1);
-//         }
-//     }
-//     return crc;
-// }
+static uint8_t SCD_CRC8(const uint8_t *data, uint8_t len)
+{
+    uint8_t crc = CRC_INIT;
+    for (int j = 0; j < len; j++) {
+        crc ^= data[j];
+        for (int i = 8; i > 0; i--) {
+            if (crc & 0x80)
+                crc = (crc << 1) ^ POLYNOMIAL;
+            else
+                crc = (crc << 1);
+        }
+    }
+    return crc;
+}
+
+
+

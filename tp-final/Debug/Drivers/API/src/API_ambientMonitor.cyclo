@@ -1,5 +1,5 @@
-../Drivers/API/src/API_ambientMonitor.c:74:8:AMB_MON_init	3
-../Drivers/API/src/API_ambientMonitor.c:98:6:AMB_MON_update	51
-../Drivers/API/src/API_ambientMonitor.c:394:13:updateDisplayData	1
-../Drivers/API/src/API_ambientMonitor.c:420:13:updateDisplayOffset	5
-../Drivers/API/src/API_ambientMonitor.c:453:13:Error_Handler	1
+../Drivers/API/src/API_ambientMonitor.c:82:8:AMB_MON_Init	3
+../Drivers/API/src/API_ambientMonitor.c:113:6:AMB_MON_Update	55
+../Drivers/API/src/API_ambientMonitor.c:430:13:updateDisplayData	1
+../Drivers/API/src/API_ambientMonitor.c:462:13:updateDisplayOffset	5
+../Drivers/API/src/API_ambientMonitor.c:499:13:Error_Handler	1

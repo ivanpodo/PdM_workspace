@@ -93,10 +93,10 @@ bool_t AMB_MON_Init()
 
     LCD_Clear();
     
-    // if (SCD_Init() != SCD_OK)
-    // {
-    //     Error_Handler();
-    // }
+    if (SCD_Init() != SCD_OK)
+    {
+        Error_Handler();
+    }
     
     return _ret;
 }
@@ -120,14 +120,7 @@ void AMB_MON_Update(eMovingDir dir, bool_t swPressed)
             LCD_SendText(LCD_INITIALIZATION_STR);
 
             SCD_CleanSensor(&Sensor);
-            // SCD_PollData(&Sensor); //TODO descomentar
-            Sensor.data.temp = 241; //TODO: sacar
-            Sensor.data.hum  = 64;  //TODO: sacar
-            Sensor.data.co2  = 789; //TODO: sacar
-
-            Sensor.config.tempOffset = 10;  //TODO: sacar
-            Sensor.config.humOffset  = 5;   //TODO: sacar
-            Sensor.config.co2Offset  = 100; //TODO: sacar
+            SCD_PollData(&Sensor);
 
             FSM.state_ = DISPLAY_DATA_TOP;
             entry = true;
@@ -146,7 +139,7 @@ void AMB_MON_Update(eMovingDir dir, bool_t swPressed)
             if (delayRead(&dataDelay))
             {
                 uartSendString(POLLING_SENSOR_DATA);
-                // SCD_PollData(&Sensor); // TODO: poll data from sensors
+                SCD_PollData(&Sensor);
                 updateDisplayData(&Sensor);
             }
             
@@ -297,7 +290,7 @@ void AMB_MON_Update(eMovingDir dir, bool_t swPressed)
 
             if (swPressed)
             {
-                FSM.state_ = DISPLAY_DATA;
+                FSM.state_ = DISPLAY_DATA_TOP;
                 entry = true;
             }
             else if (dir == CW)
@@ -445,7 +438,7 @@ static void updateDisplayData(strSCD *sensor)
     int16_t _integer = _temp / 10;
     int16_t _decimal = _temp % 10; 
 
-    sprintf(_buffer, "%d,%d\xDF""C", _integer, _decimal); /** \xB0 ASCII for (°)*/
+    sprintf(_buffer, "%d,%d\xDF""C", _integer, _decimal); /** \xDF non-standart ascii for (°)*/
     LCD_SendText((uint8_t *)_buffer);
 
     LCD_PosCharacH(LCD_HUM_POS);
@@ -477,7 +470,7 @@ static void updateDisplayOffset(int16_t counter, eState state)
         {
             int16_t _integer = counter / 10;
             int16_t _decimal = counter % 10;
-            sprintf(_buffer, "%d,%d \xDF""C", _integer, _decimal); /** \xB0 ASCII for (°)*/
+            sprintf(_buffer, "%d,%d \xDF""C", _integer, _decimal); /** \xDF non-standart ascii for (°)*/
             LCD_SendText((uint8_t *)_buffer);
         }
         break;

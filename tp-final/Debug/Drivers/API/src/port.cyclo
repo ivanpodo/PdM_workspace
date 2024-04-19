@@ -1,1 +1,2 @@
-../Drivers/API/src/port.c:4:17:uxGetTicks	1
+../Drivers/API/src/port.c:3:6:Port_Delay	1
+../Drivers/API/src/port.c:8:13:Port_ReadPin	1

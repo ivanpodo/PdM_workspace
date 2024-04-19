@@ -30,10 +30,13 @@ static const uint8_t LCD_INIT_CMD[] =
  */                                                                                                                                                                                                                                                                                                                         
 bool_t LCD_Init(void)
 {
-    if(I2C_HW_init() == LCD_ERROR) // TODO: sacar esto de acá. Era LCD_ERROR = 1
-    {
-        return LCD_ERROR;
-    }
+	if(!I2C_isInit())
+	{
+		if(I2C_HW_init() == LCD_ERROR)
+		{
+			return LCD_ERROR;
+		}
+	}
 
     Port_Delay(DELAY_20MS);
 

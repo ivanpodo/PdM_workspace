@@ -4,4 +4,4 @@
 ../Drivers/API/src/API_uart.c:115:6:uartSendString	6
 ../Drivers/API/src/API_uart.c:146:26:uartTransmitData	6
 ../Drivers/API/src/API_uart.c:191:26:uartReceiveData	6
-../Drivers/API/src/API_uart.c:230:13:Error_Handler	1
+../Drivers/API/src/API_uart.c:229:13:Error_Handler	1

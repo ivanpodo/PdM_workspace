@@ -79,7 +79,7 @@ bool_t I2C_Receive(uint16_t address, uint8_t *ptrData, uint16_t size)
  * @brief Checks if the I2C interface has been initialized.
  * @return true if I2C is initialized, false otherwise.
  */
-bool_t isInit()
+bool_t I2C_isInit()
 {
 	return isInit_;
 }
