@@ -39,15 +39,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_rnglists 0000094f  00000000  00000000  000306d0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_macro  000278d0  00000000  00000000  0003101f  2**0
+ 18 .debug_macro  000278d6  00000000  00000000  0003101f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_line   0001537b  00000000  00000000  000588ef  2**0
+ 19 .debug_line   0001537b  00000000  00000000  000588f5  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_str    000e3823  00000000  00000000  0006dc6a  2**0
+ 20 .debug_str    000e3832  00000000  00000000  0006dc70  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_frame  0000346c  00000000  00000000  00151490  2**2
+ 21 .debug_frame  0000346c  00000000  00000000  001514a4  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_line_str 0000006d  00000000  00000000  001548fc  2**0
+ 22 .debug_line_str 0000006d  00000000  00000000  00154910  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -3385,7 +3385,7 @@ bool_t SCD_PollData(strSCD *sensor)
  80016a4:	e058      	b.n	8001758 <SCD_PollData+0x110>
     };
 
-    if (SCD_CRC8(data + 3, 2) != data[TEMP_CRC_POS]) /** Check Temperature CRC */
+    if (SCD_CRC8(data + TEMP_POS_0, 2) != data[TEMP_CRC_POS]) /** Check Temperature CRC */
  80016a6:	f107 0308 	add.w	r3, r7, #8
  80016aa:	3303      	adds	r3, #3
  80016ac:	2102      	movs	r1, #2
@@ -3402,7 +3402,7 @@ bool_t SCD_PollData(strSCD *sensor)
  80016c0:	e04a      	b.n	8001758 <SCD_PollData+0x110>
     };
 
-    if (SCD_CRC8(data + 6, 2) != data[HUM_CRC_POS]) /** Check Humidity CRC */
+    if (SCD_CRC8(data + HUM_POS_0, 2) != data[HUM_CRC_POS]) /** Check Humidity CRC */
  80016c2:	f107 0308 	add.w	r3, r7, #8
  80016c6:	3306      	adds	r3, #6
  80016c8:	2102      	movs	r1, #2
@@ -10977,7 +10977,7 @@ int main(void)
 	GPIO_Init();
  800446e:	f000 f8c5 	bl	80045fc <GPIO_Init>
 
-	SystemClock_Config(); //Must be done before uartInit
+	SystemClock_Config();
  8004472:	f000 f861 	bl	8004538 <SystemClock_Config>
 	
 	if(uartInit() != true)
@@ -11005,7 +11005,7 @@ int main(void)
 	ENC_encoderInit();
  800449c:	f7fc fd8c 	bl	8000fb8 <ENC_encoderInit>
 
-	delayInit(&ledDelay, 500);
+	delayInit(&ledDelay, BLINK_TIME);
  80044a0:	f44f 71fa 	mov.w	r1, #500	; 0x1f4
  80044a4:	4823      	ldr	r0, [pc, #140]	; (8004534 <main+0xf4>)
  80044a6:	f7fc fd41 	bl	8000f2c <delayInit>

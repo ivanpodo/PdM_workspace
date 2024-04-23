@@ -36,6 +36,16 @@ Este proyecto es el trabajo práctico final para las asignaturas PdM y PCSE. Imp
 - `API_lcd`: Controla la visualización de información en el LCD.
 - Otras APIs para manejo de temporización y comunicación periférica.
 
+## Presentaciones
+
+- [Presentacion-PdM](./Docs/Presentacion-PdM.pdf)
+- [Presentacion-PCSE](./Docs/Presentacion-PCSE.pdf)
+
+## Links
+
+- [Demostración Monitor Ambiente](https://drive.google.com/file/d/1c6Spt7LK5JwAIFcHeT-6YWO50yyMYHFK/view?usp=drive_link)
+- [Demostración TRACE por UART](https://drive.google.com/file/d/1jQVafHF2vWL_g4ZWpDJu-ALKsj6rms3a/view?usp=drive_link)
+
 ## Documentación
 
 - [Documentación API Ambient Monitor](./Docs/Ambient-Monitor.md)
@@ -46,7 +56,7 @@ Este proyecto es el trabajo práctico final para las asignaturas PdM y PCSE. Imp
   
 ## Reconocimiento
 
-Quiero agradecer tanto a Patricio como a Israel por habernos hecho la cursada muy amena e interesante. Ha sido muy satisfactorio tanto el cursado como de la realización del trabajo práctico final.
+Quiero agradecer tanto a Patricio Bos como a Israel Pavelek por habernos hecho la cursada muy amena e interesante. Ha sido muy satisfactorio tanto el cursado como de la realización del trabajo práctico final.
 
 ## Autor
 

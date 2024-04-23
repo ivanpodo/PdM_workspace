@@ -121,12 +121,12 @@ bool_t SCD_PollData(strSCD *sensor)
     	return SCD_ERROR;
     };
 
-    if (SCD_CRC8(data + 3, 2) != data[TEMP_CRC_POS]) /** Check Temperature CRC */
+    if (SCD_CRC8(data + TEMP_POS_0, 2) != data[TEMP_CRC_POS]) /** Check Temperature CRC */
     {
     	return SCD_ERROR;
     };
 
-    if (SCD_CRC8(data + 6, 2) != data[HUM_CRC_POS]) /** Check Humidity CRC */
+    if (SCD_CRC8(data + HUM_POS_0, 2) != data[HUM_CRC_POS]) /** Check Humidity CRC */
     {
         	return SCD_ERROR;
 	};

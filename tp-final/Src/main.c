@@ -15,6 +15,8 @@
 #include "API_encoder.h"
 #include "API_ambientMonitor.h"
 
+#define BLINK_TIME 500
+
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
@@ -42,7 +44,7 @@ int main(void)
 
 	GPIO_Init();
 
-	SystemClock_Config(); //Must be done before uartInit
+	SystemClock_Config();
 	
 	if(uartInit() != true)
 	{
@@ -54,7 +56,7 @@ int main(void)
 	ENC_setGPIOs(&Encoder_DT, &Encoder_CLK);
 	ENC_encoderInit();
 
-	delayInit(&ledDelay, 500);
+	delayInit(&ledDelay, BLINK_TIME);
 
 	if(AMB_MON_Init() != true)
 	{
