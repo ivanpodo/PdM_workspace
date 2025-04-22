@@ -48,7 +48,7 @@ Este proyecto es el trabajo práctico final para las asignaturas PdM y PCSE. Imp
 
 ## Documentación
 
-- [Documentación API Ambient Monitor](./Docs/Ambient-Monitor.md)
+- [Documentación API Ambient Monitor](./Docs/Ambient_Monitor.md)
 - [Documentación API Encoder](./Docs/Encoder.md)
 - [Documentación API SCD4x](./Docs/SCD4x.md)
 - [Documentación API LCD](./Docs/LCD.md)
